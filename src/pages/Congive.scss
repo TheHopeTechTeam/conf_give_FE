@@ -1,0 +1,705 @@
+$pc: "(min-width: 1033px)";
+$tablet: "(max-width: 1032px)";
+$mobile: "(max-width: 599px)"; // 小於 600px 都視為 mobile
+
+@font-face {
+    font-family: 'Gotham-Black';
+    src: url('/fonts/Gotham-Black.woff2') format('woff2')
+}
+
+@font-face {
+    font-family: 'Gotham-Thin';
+    src: url('/fonts/Gotham-Thin.woff2') format('woff2')
+}
+
+@font-face {
+    font-family: 'Ade';
+    src: url('/fonts/Ade-Display.woff2') format('woff2')
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('/fonts/Roboto.woff2') format('woff2')
+}
+
+.title {
+    position: fixed; // **讓標題固定**
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    transition: background 0.3s ease-in-out;
+    z-index: 100; // **確保它高於其他內容**
+
+    // **根據螢幕大小切換背景圖片**
+    @media #{$pc},
+    #{$tablet} {
+        background-image: url('/images/pc-banner-middle-size.webp');
+    }
+
+    @media #{$tablet} {
+        background-image: url('/images/pc-banner-large-size.webp');
+    }
+
+    @media #{$mobile} {
+        background-image: url('/images/mobile-banner.webp');
+    }
+
+    // 黑色遮罩 (會根據滾動改變透明度)
+    &::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, var(--scroll-opacity));
+        transition: background 0.3s ease-in-out;
+    }
+
+    .title-block {
+        position: absolute;
+        bottom: 20px;
+        left: 20px;
+        z-index: 1;
+
+        .title-name {
+            font-family: 'Gotham-Black';
+            font-size: 24px;
+            font-weight: bold;
+            line-height: normal;
+
+        }
+
+        .title-property {
+            font-family: "Ade";
+            font-size: 64px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+        }
+    }
+}
+
+.wrapper {
+    width: 100%;
+    margin: 0 auto;
+
+    .form {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        margin: 0 auto;
+        align-items: center;
+        padding: 24px;
+
+        .form-block {
+
+            @media #{$pc},
+            #{$tablet} {
+                width: 600px;
+            }
+
+            @media #{$mobile} {
+                width: 100%;
+                max-width: 390px;
+            }
+
+            .basic-formControl {
+                border-radius: 4px;
+                font-family: 'Roboto';
+
+                .MuiOutlinedInput-root {
+                    border: 0px;
+                    color: #070707;
+                    font-size: 16px;
+                    background-color: white;
+
+                    &.Mui-error {
+                        fieldset {
+                            border: 1px solid #E46962 !important; // 設定錯誤時的邊框顏色
+                        }
+                    }
+
+                }
+
+                .MuiSelect-select {
+                    color: #070707;
+                    background-color: white;
+                }
+
+                .MuiOutlinedInput-notchedOutline {
+                    border: none;
+                }
+
+
+                /* 隱藏數字輸入的上下箭頭 */
+                input[type="number"]::-webkit-inner-spin-button,
+                input[type="number"]::-webkit-outer-spin-button {
+                    appearance: none;
+                    -webkit-appearance: none;
+                    margin: 0;
+                }
+            }
+
+            .amount {
+                margin-bottom: 5px;
+
+                .MuiInputBase-root {
+                    height: 88px;
+                    font-size: 24px;
+
+                    .MuiTypography-root {
+                        font-family: 'Gotham-Thin';
+                        font-size: 24px;
+                        font-style: normal;
+                        font-weight: 700;
+                        line-height: normal;
+                        letter-spacing: 0.5px;
+                    }
+
+                    .MuiInputBase-input {
+                        color: rgba(0, 0, 0, 0.70);
+                        font-family: "Gotham-Black";
+                        font-size: 48px;
+                        font-style: normal;
+                        font-weight: 500;
+                        line-height: normal;
+                        letter-spacing: 0.5px;
+                    }
+
+                    .MuiOutlinedInput-input:focus {
+                        color: #FFA01F;
+                    }
+                }
+
+                @media #{$pc},
+                #{$tablet} {
+                    width: 100%;
+                }
+            }
+
+            .exchange-rate {
+                display: flex;
+                flex-direction: row;
+                font-family: 'Roboto';
+                font-size: 14px;
+                font-weight: 400;
+                color: #49454F;
+                margin-bottom: 16px;
+
+                @media #{$pc},
+                #{$tablet} {
+                    width: 568px;
+                }
+
+                @media #{$mobile},
+                #{$tablet} {
+                    width: 200px;
+                }
+
+                .disclaimer {
+                    text-decoration: underline
+                }
+            }
+
+            .email {
+                margin-bottom: 16px;
+                width: 100%;
+            }
+
+            .phone-block {
+                display: flex;
+                gap: 8px;
+                margin-bottom: 16px;
+                width: 100%;
+
+                .phone-code {
+                    width: 205px;
+                }
+
+                .phone-number {
+
+                    @media #{$pc},
+                    #{$tablet} {
+                        width: 496px;
+                    }
+                }
+            }
+
+            .contact-information {
+                display: flex;
+                flex-direction: column;
+                gap: 36px;
+
+                .receipt-name-block {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 24px;
+                }
+
+                .contact-information-note {
+                    color: rgba(40, 40, 41, 0.80);
+                    font-family: 'Roboto';
+                    font-size: 12px;
+                    font-style: normal;
+                    font-weight: 400;
+                    line-height: 20px;
+                    letter-spacing: 0.1px;
+                }
+
+                .checkbox-label-block {
+                    margin-left: 0;
+                    margin-right: 0;
+                    display: flex;
+                    gap: 8px;
+                }
+
+                .checkbox-custom {
+                    padding: 0;
+                    color: rgba(40, 40, 41, 0.80);
+
+                    &.Mui-checked {
+                        color: #FFA01F;
+                    }
+
+                    & .MuiSvgIcon-fontSizeMedium {
+                        border-radius: 2px;
+                    }
+                }
+
+                .company-tax-block {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 36px;
+                }
+
+                .label-custom {
+                    font-family: 'Roboto';
+                    font-style: normal;
+                    font-weight: 400;
+                    line-height: 24px;
+                    letter-spacing: 0.5px;
+
+                    @media #{$pc},
+                    #{$tablet} {
+                        width: 400px;
+                    }
+
+                    @media #{$mobile} {
+                        width: 294px;
+                    }
+                }
+
+                .label-chinese {
+                    color: #070707;
+                    font-size: 18px;
+                }
+
+                .label-english {
+                    color: rgba(40, 40, 41, 0.80);
+                    font-size: 16px;
+                }
+
+                .personal-company-button {
+                    border-radius: 999px;
+                    text-align: center;
+                    font-family: 'Roboto';
+                    font-size: 14px;
+                    font-style: normal;
+                    font-weight: 500;
+                    line-height: 20px;
+                    letter-spacing: 0.1px;
+                    margin-right: 16px;
+                    width: 77px;
+                }
+
+                .clicked {
+                    background: #FFA01F;
+                    color: #FFF;
+                }
+
+                .not-clicked {
+                    color: #FFA01F;
+                    border: 1px solid #FFA01F;
+                }
+
+                .receiptName {
+                    margin: 8px 0;
+                }
+
+                .payment-method-icon-text {
+                    display: flex;
+                    align-items: center;
+                    gap: 8px;
+                }
+
+                .credit-card-block {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 32px;
+                    border-radius: 8px;
+                    background: rgba(40, 40, 41, 0.10);
+                    padding: 16px;
+
+                    .valid-text {
+                        color: #E46962;
+                        font-family: "Roboto";
+                        font-size: 12px;
+                        font-style: normal;
+                        font-weight: 400;
+                        line-height: 16px;
+                    }
+
+
+                    .tpfield {
+                        background-color: white;
+                        border-radius: 4px;
+                        padding: 10px;
+                        height: 56px;
+                        margin-top: 8px;
+                    }
+
+                    .credit-card-date-ccv-block {
+                        display: flex;
+                        flex-direction: row;
+                        gap: 24px;
+                    }
+                }
+
+                .note-block {
+                    cursor: pointer;
+                    width: 100%;
+                    display: flex;
+                    align-items: center;
+                    gap: 8px;
+
+                    .add-icon {
+                        width: 18px;
+                        height: 18px;
+                    }
+
+                    .edit-icon {
+                        width: 18px;
+                        height: 18px;
+                    }
+
+                    .add-note-label {
+                        font-size: 'Roboto';
+                        color: rgba(0, 0, 0, 0.70);
+                        font-size: 14px;
+                        font-style: normal;
+                        font-weight: 500;
+                        line-height: 20px;
+                        /* 142.857% */
+                    }
+
+                    .edit-note-label {
+                        color: rgba(0, 0, 0, 0.70);
+                        text-align: center;
+                        font-family: 'Roboto';
+                        font-size: 14px;
+                        font-style: normal;
+                        font-weight: 500;
+                        line-height: 20px;
+                        letter-spacing: 0.1px;
+                        max-width: 200px;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                    }
+                }
+            }
+        }
+    }
+
+    .success {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-items: center;
+        text-align: center;
+        gap: 24px;
+        margin: 0 auto;
+        padding: 24px;
+
+        @media #{$pc},
+        #{$tablet} {
+            width: 600px;
+        }
+
+        @media #{$mobile} {
+            width: 100%;
+            max-width: 390px;
+            padding-top: 120px !important;
+        }
+
+        .success-title {
+            color: #070707;
+            font-family: "Noto Sans TC";
+            font-size: 32px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+            letter-spacing: 0.5px;
+        }
+
+        .success-title-english {
+            color: #070707;
+            font-family: "Gotham-Black";
+            font-size: 20px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: normal;
+            letter-spacing: 0.5px;
+        }
+
+        .note-chinese {
+            color: rgba(40, 40, 41, 0.80);
+            text-align: center;
+            font-family: "Noto Sans TC";
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+
+            a {
+                text-decoration: underline;
+                text-decoration-color: rgba(40, 40, 41, 0.80);
+            }
+        }
+
+        .note-english {
+            color: rgba(40, 40, 41, 0.80);
+            text-align: center;
+            font-family: "Noto Sans TC";
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+            letter-spacing: 0.5px;
+
+            a {
+                text-decoration: underline;
+                text-decoration-color: rgba(40, 40, 41, 0.80);
+            }
+        }
+    }
+
+    .continue-button {
+        border-radius: 999px;
+        padding: 10px 24px;
+        color: #FFF;
+        background-color: #FFA01F;
+    }
+
+    .fake-pay-button {
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-color: black;
+        background-position: 50% 50%;
+        border-radius: 5px;
+        width: 100%;
+        height: 44.5px;
+    }
+
+    .apple-pay-button {
+        background-image: url('/images/apple-pay-icon.webp');
+    }
+
+    .google-pay-button {
+        background-image: url('/images/google-pay-icon.webp');
+    }
+
+    .samsung-pay-button {
+        background-image: url('/images/samsung-pay-icon.webp');
+    }
+
+    .note {
+        border-radius: 12px;
+        border: 1px solid rgba(40, 40, 41, 0.10);
+    }
+}
+
+.loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 999;
+
+    .loading-icon {
+        color: rgb(241, 217, 132);
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        z-index: 1000;
+        transform: translate(-50%, -50%);
+    }
+}
+
+.MuiDialog-container {
+    .MuiPaper-root {
+        width: 312px;
+        border-radius: 15px;
+    }
+
+    .dialog-title {
+        color: #070707;
+        font-family: 'Roboto';
+        font-size: 24px;
+        font-style: normal;
+        font-weight: 400;
+    }
+
+    .MuiDialogContent-root {
+        .dialog-message {
+            color: #070707;
+            font-family: 'Roboto';
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 20px;
+        }
+    }
+
+    .dialog-button {
+        color: #FFA01F;
+        font-family: 'Roboto';
+        font-size: var(--Label-Large-Size, 14px);
+        font-size: 14px;
+        font-weight: 500;
+    }
+}
+
+.note {
+
+    .MuiOutlinedInput-notchedOutline {
+        border: 1px solid rgba(40, 40, 41, 0.10);
+        color: #070707;
+        font-family: 'Noto Sans TC';
+    }
+
+    // hover 時
+    .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
+        border: 1px solid rgba(40, 40, 41, 0.10);
+    }
+
+    // focus 時
+    .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+        border: 1px solid rgba(40, 40, 41, 0.10);
+    }
+
+    // error 時
+    .MuiOutlinedInput-root.Mui-error .MuiOutlinedInput-notchedOutline {
+        border: 1px solid #E46962;
+    }
+}
+
+.MuiFormControl-root {
+    .MuiFormHelperText-root {
+        color: #E46962 !important;
+        margin-left: 0;
+        font-family: 'Roboto';
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 16px;
+        margin-top: 6px;
+    }
+}
+
+.note-alert {
+    font-family: 'Roboto';
+    font-size: 14px !important;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 16px;
+    margin-top: 6px;
+}
+
+.width100 {
+    width: 100%;
+}
+
+#apple-pay-button-container div {
+    min-height: 30px;
+    border: 1px solid black;
+    background-image: url('/images/apple-pay-icon.webp') !important;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-color: black;
+    background-position: 50% 50%;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px auto;
+    transition: background-color .15s;
+    appearance: none !important;
+}
+
+#google-pay-button-container div {
+    min-height: 30px;
+    border: 1px solid black;
+    background-image: url('/images/google-pay-icon.webp') !important;
+    background-size: contain;
+    /* 確保 logo 自動調整大小 */
+    background-repeat: no-repeat;
+    background-color: black;
+    background-position: center;
+    /* 居中顯示 logo */
+    border-radius: 5px;
+    margin: 10px auto;
+    transition: background-color .15s;
+    appearance: none !important;
+    /* 隱藏任何可能的文字 */
+    text-indent: -9999px;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+#samsung-pay-button-container div {
+    background-origin: padding-box !important;
+    min-height: 30px;
+    border: 1px solid black;
+    background-image: url('/images/samsung-pay-icon.webp') !important;
+    /* 設置 Google Pay logo */
+    background-size: contain;
+    /* 確保 logo 自動調整大小 */
+    background-repeat: no-repeat;
+    background-color: black;
+    background-position: center;
+    /* 居中顯示 logo */
+    border-radius: 5px;
+    margin: 10px auto;
+    transition: background-color .15s;
+    appearance: none !important;
+
+    /* 隱藏任何可能的文字 */
+    text-indent: -9999px;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.successAndFailWrapper {
+    display: flex;
+    align-items: center;
+    height: 100dvh;
+    margin-top: 0 !important;
+}
+
+.m-t-8 {
+    margin-top: 8px !important;
+}
+
+.m-r-3 {
+    margin-right: 3px;
+}
