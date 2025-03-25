@@ -36,7 +36,11 @@ const PayButton: React.FC<PayButtonProps> = (props) => {
             {paymentType === "google-pay" && (
                 <>
                     {isGooglePayReady ? (
-                        <div id="google-pay-button-container" onClick={setupGooglePay}></div>
+                        <button
+                            type="button"
+                            className="fake-pay-button google-pay-button"
+                            onClick={setupGooglePay}
+                        ></button>
                     ) : (
                         <button
                             type="submit"
@@ -48,7 +52,11 @@ const PayButton: React.FC<PayButtonProps> = (props) => {
             {paymentType === "samsung-pay" && (
                 <>
                     {isSamsungPayReady ? (
-                        <div id="samsung-pay-button-container" onClick={setupSamsungPay}></div>
+                        <button
+                            type="button"
+                            className="fake-pay-button samsung-pay-button"
+                            onClick={setupSamsungPay}
+                        ></button>
                     ) : (
                         <button
                             type="submit"
