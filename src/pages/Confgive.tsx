@@ -78,9 +78,9 @@ const CONFGive = () => {
     useEffect(() => {
         
         const tappayAppId = Number(import.meta.env.VITE_TAPPAY_APP_ID) || 0;
-        const tappayAppKey = import.meta.env.VITE_TAPPAY_APP_KEY || "";
-        const appleMerchantId = import.meta.env.VITE_APPLE_MERCHANT_ID || "";
-        const googleMerchantId = import.meta.env.VITE_GOOGLE_MERCHANT_ID || "";
+        const tappayAppKey = import.meta.env.VITE_TAPPAY_APP_KEY || '';
+        const appleMerchantId = import.meta.env.VITE_APPLE_MERCHANT_ID || '';
+        const googleMerchantId = import.meta.env.VITE_GOOGLE_MERCHANT_ID || '';
         
         console.log(googleMerchantId);
 
@@ -92,7 +92,7 @@ const CONFGive = () => {
         console.log("TapPay SDK 加載完成");
         TPDirect.setupSDK(
             tappayAppId,
-            tappayAppKey || '',
+            tappayAppKey,
             'sandbox'
         );
         TPDirect.paymentRequestApi.checkAvailability();
@@ -120,10 +120,10 @@ const CONFGive = () => {
             country_code: 'tw'
         });
 
-        let ua = navigator.userAgent.toLowerCase();
-        let android = ua.includes("android");
-        let iOS = /iphone|ipad|ipod/.test(ua);
-        let samsung = /sm-|galaxy/.test(ua);
+        const ua = navigator.userAgent.toLowerCase();
+        const android = ua.includes("android");
+        const iOS = /iphone|ipad|ipod/.test(ua);
+        const samsung = /sm-|galaxy/.test(ua);
 
         switch (true) {
             case samsung:
@@ -222,7 +222,7 @@ const CONFGive = () => {
 
         setIsApplePayReady(true);
 
-        let paymentRequest = {
+        const paymentRequest = {
             supportedNetworks: ["AMEX", "JCB", "MASTERCARD", "VISA"],
             supportedMethods: ["apple_pay"],
             displayItems: [{ label: "TapPay", amount: { currency: "TWD", value: getValues("amount").toString() } }],
@@ -269,7 +269,7 @@ const CONFGive = () => {
 
         let lastfour = '';
 
-        var paymentRequest = {
+        const paymentRequest = {
             allowedNetworks: ["AMEX", "JCB", "MASTERCARD", "VISA"],
             price: getValues("amount").toString(), // optional
             currency: "TWD", // optional
