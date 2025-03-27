@@ -19,6 +19,18 @@ declare global {
     let TPDirect: any;
 }
 
+const PAYMENT_TYPES = {
+        APPLE_PAY: "apple-pay",
+        GOOGLE_PAY: "google-pay",
+        SAMSUNG_PAY: "samsung-pay",
+        CREDIT_CARD: "credit-card",
+    };
+  
+const RECEIPT_TYPES = {
+        PERSONAL: "personal",
+        COMPANY: "company",
+    };
+
 
 const CONFGive = () => {
     const { register, handleSubmit, getValues, watch, setValue, clearErrors, formState: { errors, isValid } } = useForm<ConfGiveProps>(
@@ -42,7 +54,7 @@ const CONFGive = () => {
     const [isGooglePayReady, setIsGooglePayReady] = useState(false);
     const [isSamsungPayReady, setIsSamsungPayReady] = useState(false);
     const [loading, setLoading] = useState(false);
-    const [receiptType, setReceiptType] = useState<string>("personal");
+    const [receiptType, setReceiptType] = useState<string>(RECEIPT_TYPES.PERSONAL);
     const [isFocused, setIsFocused] = useState(false);
     const note = watch("note") || ""; // 確保 note 不為 undefined
     const [noteLength, setNoteLength] = useState(note.length);
@@ -64,17 +76,28 @@ const CONFGive = () => {
 
     // **初始化設定 **
     useEffect(() => {
-        console.log(import.meta.env.VITE_GOOGLE_MERCHANT_ID);
+        
+        const tappayAppId = Number(import.meta.env.VITE_TAPPAY_APP_ID) || 0;
+        const tappayAppKey = import.meta.env.VITE_TAPPAY_APP_KEY || "";
+        const appleMerchantId = import.meta.env.VITE_APPLE_MERCHANT_ID || "";
+        const googleMerchantId = import.meta.env.VITE_GOOGLE_MERCHANT_ID || "";
+        
+        console.log(googleMerchantId);
+
+        if (!tappayAppId || !tappayAppKey) {
+            // Error handling
+            console.error("Missing TapPay configuration in environment variables.");
+        }
 
         console.log("TapPay SDK 加載完成");
         TPDirect.setupSDK(
-            Number(import.meta.env.VITE_TAPPAY_APP_ID),
-            import.meta.env.VITE_TAPPAY_APP_KEY || '',
+            tappayAppId,
+            tappayAppKey || '',
             'sandbox'
         );
         TPDirect.paymentRequestApi.checkAvailability();
         TPDirect.paymentRequestApi.setupApplePay({
-            merchantIdentifier: import.meta.env.VITE_APPLE_MERCHANT_ID,
+            merchantIdentifier: appleMerchantId,
             countryCode: 'TW',
         });
         const googlePaySetting = {
@@ -102,14 +125,18 @@ const CONFGive = () => {
         let iOS = /iphone|ipad|ipod/.test(ua);
         let samsung = /sm-|galaxy/.test(ua);
 
-        if (samsung) {
-            setSelectedPayment("samsung-pay");
-        } else if (iOS) {
-            setSelectedPayment("apple-pay");
-        } else if (android) {
-            setSelectedPayment("google-pay");
-        } else {
-            setSelectedPayment("apple-pay");
+        switch (true) {
+            case samsung:
+                setSelectedPayment(PAYMENT_TYPES.SAMSUNG_PAY);
+                break;
+            case iOS:
+                setSelectedPayment(PAYMENT_TYPES.APPLE_PAY);
+                break;
+            case android:
+                setSelectedPayment(PAYMENT_TYPES.GOOGLE_PAY);
+                break;
+            default:
+                setSelectedPayment(PAYMENT_TYPES.CREDIT_CARD);
         };
     }, []);
 
@@ -119,7 +146,7 @@ const CONFGive = () => {
 
 
     useEffect(() => {
-        if (receiptType === "company") {
+        if (receiptType === RECEIPT_TYPES.COMPANY) {
             setValue("upload", false);
             setValue("nationalid", "");
         }
@@ -154,23 +181,28 @@ const CONFGive = () => {
 
 
     useEffect(() => {
-        if (isValid) {
-            switch (watch('paymentType')) {
-                case "apple-pay":
-                    setupApplePay();
-                    break;
-                case "google-pay":
-                    setIsGooglePayReady(true);
-                    break;
-                case "samsung-pay":
-                    setIsSamsungPayReady(true);
-                    break;
-            };
-        } else {
+        if(!isValid) {
             setIsGooglePayReady(false);
             setIsApplePayReady(false);
             setIsSamsungPayReady(false);
+            return;
+        }
+        
+        switch (watch('paymentType')) {
+            case PAYMENT_TYPES.APPLE_PAY:
+                setupApplePay();
+                break;
+            case PAYMENT_TYPES.GOOGLE_PAY:
+                setIsGooglePayReady(true);
+                break;
+            case PAYMENT_TYPES.SAMSUNG_PAY:
+                setIsSamsungPayReady(true);
+                break;
+            default:
+                // 沒有 default 好像怪怪的，但想不到可以放什麼 lol
+                break;
         };
+        
         // eslint-disable-next-line
     }, [errors, isValid, watch('paymentType'), watch('amount')]);
 
