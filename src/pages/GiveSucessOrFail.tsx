@@ -46,7 +46,7 @@ const GiveSucessOrFail = ({ giveStatus }: { giveStatus: string }) => {
                     if (giveStatus === "fail") {
                         window.location.href = "/CONFGIVE";
                     } else {
-                        window.location.href = "/";
+                        window.location.href = "https://thehope.co/";
                     };
                 }}>
                 {giveStatus === "fail" ? "TRY AGAIN" : "BACK TO HOME"}
