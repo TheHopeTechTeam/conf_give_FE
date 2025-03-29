@@ -20,16 +20,16 @@ declare global {
 }
 
 const PAYMENT_TYPES = {
-        APPLE_PAY: "apple-pay",
-        GOOGLE_PAY: "google-pay",
-        SAMSUNG_PAY: "samsung-pay",
-        CREDIT_CARD: "credit-card",
-    };
-  
+    APPLE_PAY: "apple-pay",
+    GOOGLE_PAY: "google-pay",
+    SAMSUNG_PAY: "samsung-pay",
+    CREDIT_CARD: "credit-card",
+};
+
 const RECEIPT_TYPES = {
-        PERSONAL: "personal",
-        COMPANY: "company",
-    };
+    PERSONAL: "personal",
+    COMPANY: "company",
+};
 
 
 const CONFGive = () => {
@@ -76,12 +76,12 @@ const CONFGive = () => {
 
     // **初始化設定 **
     useEffect(() => {
-        
+
         const tappayAppId = Number(import.meta.env.VITE_TAPPAY_APP_ID) || 0;
         const tappayAppKey = import.meta.env.VITE_TAPPAY_APP_KEY || '';
         const appleMerchantId = import.meta.env.VITE_APPLE_MERCHANT_ID || '';
         const googleMerchantId = import.meta.env.VITE_GOOGLE_MERCHANT_ID || '';
-        
+
         console.log(googleMerchantId);
 
         if (!tappayAppId || !tappayAppKey) {
@@ -181,13 +181,13 @@ const CONFGive = () => {
 
 
     useEffect(() => {
-        if(!isValid) {
+        if (!isValid) {
             setIsGooglePayReady(false);
             setIsApplePayReady(false);
             setIsSamsungPayReady(false);
             return;
         }
-        
+
         switch (watch('paymentType')) {
             case PAYMENT_TYPES.APPLE_PAY:
                 setupApplePay();
@@ -202,7 +202,7 @@ const CONFGive = () => {
                 // 沒有 default 好像怪怪的，但想不到可以放什麼 lol
                 break;
         };
-        
+
         // eslint-disable-next-line
     }, [errors, isValid, watch('paymentType'), watch('amount')]);
 
@@ -371,21 +371,31 @@ const CONFGive = () => {
             }),
         })
             .then((res) => res.json())
-            .then(() => {
+            .then((res) => {
+                console.log(res);
                 console.log("✅ 付款成功");
-                document.body.style.overflow = "hidden";
-                document.body.style.backgroundColor = "#F1D984";
-                document.querySelector(".wrapper")?.classList.add("successAndFailWrapper");
-                setGiveStatus("success");
-                setLoading(false);
+                if (res.status === 0) {
+                    document.body.style.overflow = "hidden";
+                    document.body.style.backgroundColor = "#F1D984";
+                    document.querySelector(".wrapper")?.classList.add("successAndFailWrapper");
+                    setGiveStatus("success");
+                    setLoading(false);
+                } else {
+                    setError();
+                };
             })
             .catch((error) => {
                 console.log("❌ 錯誤：", error);
-                document.body.style.overflow = "hidden";
-                document.querySelector(".wrapper")?.classList.add("successAndFailWrapper");
-                setGiveStatus("fail");
-                setLoading(false);
+                setError();
             });
+    }
+
+    // **設置 錯誤訊息**
+    const setError = () => {
+        document.body.style.overflow = "hidden";
+        document.querySelector(".wrapper")?.classList.add("successAndFailWrapper");
+        setGiveStatus("fail");
+        setLoading(false);
     }
 
     // **輸入框內禁止輸入 0 開頭**
