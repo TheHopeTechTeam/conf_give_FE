@@ -82,8 +82,6 @@ const CONFGive = () => {
         const appleMerchantId = import.meta.env.VITE_APPLE_MERCHANT_ID || '';
         const googleMerchantId = import.meta.env.VITE_GOOGLE_MERCHANT_ID || '';
 
-        console.log(googleMerchantId);
-
         if (!tappayAppId || !tappayAppKey) {
             // Error handling
             console.error("Missing TapPay configuration in environment variables.");
@@ -101,19 +99,10 @@ const CONFGive = () => {
             countryCode: 'TW',
         });
         const googlePaySetting = {
-            googleMerchantId: "Come from google portal",
-            tappayGoogleMerchantId: "Come from tappay portal",
+            tappayGoogleMerchantId: googleMerchantId,
             allowedCardAuthMethods: ["PAN_ONLY", "CRYPTOGRAM_3DS"],
             merchantName: "TapPay Test!",
-            emailRequired: true, // optional
-            shippingAddressRequired: true, // optional,
-            billingAddressRequired: true, // optional
-            billingAddressFormat: "MIN", // FULL, MIN
-
-            allowPrepaidCards: true,
             allowedCountryCodes: ['TW'],
-
-            phoneNumberRequired: true // optional
         }
         TPDirect.googlePay.setupGooglePay(googlePaySetting);
         TPDirect.samsungPay.setup({
