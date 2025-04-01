@@ -201,7 +201,8 @@ $mobile: "(max-width: 599px)"; // 小於 600px 都視為 mobile
                 }
 
                 .disclaimer {
-                    text-decoration: underline
+                    text-decoration: underline;
+                    cursor: pointer;
                 }
             }
 
