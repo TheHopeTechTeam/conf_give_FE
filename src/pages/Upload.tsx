@@ -38,6 +38,10 @@ const Upload: React.FC<UploadProps> = (props) => {
                                 className="m-t-8 width100 basic-formControl"
                                 {...register("nationalid", {
                                     required: upload && receiptType === "personal" ? "Required" : false,
+                                    validate: (value) => {
+                                        const NationalIDPattern = /^[A-Z][12]\d{8}$/;
+                                        return NationalIDPattern.test(value) || "National ID invalid";
+                                    }
                                 })}
                                 error={!!errors.nationalid}
                                 helperText={

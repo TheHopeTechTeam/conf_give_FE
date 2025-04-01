@@ -12,6 +12,58 @@ interface ReceiptProps {
 const Receipt: React.FC<ReceiptProps> = (props) => {
     const { receipt, register, errors, setReceiptType, receiptType } = props;
 
+    // 統一編號的檢查碼驗證規則
+    const taxIDNumberPattern = (value: any) => {
+        // 檢查字元是否符合規則
+        const regex = /^[0-9]{8}$/;
+
+        // 統一編號 邏輯乘數
+        const logicMultipliers = [1, 2, 1, 2, 1, 2, 4, 1];
+
+        // 計算陣列總和
+        const sum = (numbers: any) => {
+            const initialValue = 0;
+            const sumWithInitial = numbers.reduce(
+                (accumulator: any, currentValue: any) => Number(accumulator) + Number(currentValue),
+                initialValue,
+            );
+            return sumWithInitial
+        }
+
+        if (value.length !== 8 || !regex.test(value)) {
+            return 'Tax ID Number invalid'
+        }
+
+        let logicProductArr = []
+        let logicProduct = 0;
+        // 通一編號倒數第二位為7時，乘積之和最後第二位數取0或1均可，其中之一和能被5整除，則符合統編邏輯
+        if (value[6] == "7") {
+            for (let i = 0; i < value.length; i++) {
+                if (i != 6) {
+                    logicProductArr.push(parseInt(value[i]) * logicMultipliers[i])
+                }
+            }
+        } else {
+            for (let i = 0; i < value.length; i++) {
+                logicProductArr.push(parseInt(value[i]) * logicMultipliers[i]);
+            }
+        }
+
+        for (const item of logicProductArr) {
+            ;
+            logicProduct += sum((item.toString()).split(''))
+        }
+
+        if (value[6] === '7' && (logicProduct % 5 === 0 || (logicProduct + 1) % 5 === 0)) {
+            return true;
+        } else if (logicProduct % 5 === 0) {
+            return true;
+        }
+
+        return 'Tax ID Number invalid';
+    }
+
+
     return (
         <>
             <div className="receipt-name-block">
@@ -80,6 +132,7 @@ const Receipt: React.FC<ReceiptProps> = (props) => {
                                 {...register("taxid", {
                                     // 當 getPaymentType === "company" 時，才需要驗證
                                     required: receiptType === "company" ? "Required" : false,
+                                    validate: taxIDNumberPattern,
                                 })}
                                 error={!!errors.taxid}
                                 helperText={typeof errors.taxid?.message === 'string' ? errors.taxid?.message : undefined}
