@@ -357,7 +357,7 @@ const CONFGive = () => {
     // **傳送至後端 API**
     const postPay = (prime: string, last_four: string) => {
         setLoading(true);
-        fetch('/api/payment', {
+        fetch('https://confgive.thehope.app/api/payment', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
