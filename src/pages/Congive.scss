@@ -319,7 +319,7 @@ $mobile: "(max-width: 599px)"; // 小於 600px 都視為 mobile
 
                 .clicked {
                     background: #FFA01F;
-                    color: #FFF;
+                    color: #070707;
                 }
 
                 .not-clicked {
@@ -494,8 +494,9 @@ $mobile: "(max-width: 599px)"; // 小於 600px 都視為 mobile
     .continue-button {
         border-radius: 999px;
         padding: 10px 24px;
-        color: #FFF;
+        color: #070707;
         background-color: #FFA01F;
+        font-weight: 500;
     }
 
     .fake-pay-button {

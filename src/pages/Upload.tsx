@@ -11,6 +11,28 @@ interface UploadProps {
 const Upload: React.FC<UploadProps> = (props) => {
     const { upload, register, errors, receiptType } = props;
 
+    // 身份證驗證規則
+    const NationalIDPattern = (idStr: string) => {
+        const letters = "ABCDEFGHJKLMNPQRSTUVXYWZIO".split("");
+        const multiply = [1, 9, 8, 7, 6, 5, 4, 3, 2, 1];
+
+        if (!/^[A-Z](1|2)\d{8}$/i.test(idStr)) {
+            return "National ID invalid";
+        };
+
+        const firstChar = idStr.charAt(0).toUpperCase();
+        const lastNum = parseInt(idStr.charAt(9), 10);
+        const firstNum = letters.indexOf(firstChar) + 10;
+        const nums = [Math.floor(firstNum / 10), firstNum % 10];
+
+        let total = nums[0] * multiply[0] + nums[1] * multiply[1];
+        for (let i = 2; i < multiply.length; i++) {
+            total += parseInt(idStr.charAt(i - 1), 10) * multiply[i];
+        };
+
+        return (10 - (total % 10)) % 10 === lastNum || "National ID invalid";
+    };
+
     return (
         <>
             {receiptType === "personal" && (
@@ -38,10 +60,7 @@ const Upload: React.FC<UploadProps> = (props) => {
                                 className="m-t-8 width100 basic-formControl"
                                 {...register("nationalid", {
                                     required: upload && receiptType === "personal" ? "Required" : false,
-                                    validate: (value) => {
-                                        const NationalIDPattern = /^[A-Z][12]\d{8}$/;
-                                        return NationalIDPattern.test(value) || "National ID invalid";
-                                    }
+                                    validate: NationalIDPattern,
                                 })}
                                 error={!!errors.nationalid}
                                 helperText={
