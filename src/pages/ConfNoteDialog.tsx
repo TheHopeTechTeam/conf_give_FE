@@ -30,25 +30,23 @@ const ConfNoteDialog: React.FC<AddNoteDialogProps> = ({
             <DialogTitle className="dialog-title">{title}</DialogTitle>
             <DialogContent>
                 <TextField
-                    {...register("note", {
-                        maxLength: { value: 200, message: `Maximum character limit exceeded ${noteLength}/200` }
-                    })}
+                    {...register("note")}
                     id="outlined-required"
                     className="width100 m-t-8 note"
                     type="text"
-                    placeholder="NOTE"
+                    placeholder="Note"
                     multiline
                     rows={9}
                     error={!!errors.note}
                     helperText={typeof errors.note?.message === 'string' ? errors.note?.message : undefined} />
-                {noteLength < 200 && (
-                    <p
-                        className="note-alert"
-                        style={{ color: errors.note ? "#E46962" : "rgba(40, 40, 41, 0.80)" }}
-                    >
-                        Maximum character limit is 200
-                    </p>
-                )}
+                <p
+                    className="note-alert"
+                    style={{ color: noteLength > 200 ? "#E46962" : "rgba(40, 40, 41, 0.80)" }}
+                >
+                    {noteLength > 200
+                        ? `Maximum character limit exceeded ${noteLength}/200`
+                        : "Maximum character limit is 200"}
+                </p>
             </DialogContent>
             <DialogActions>
                 <Button onClick={onClose} className="dialog-button">

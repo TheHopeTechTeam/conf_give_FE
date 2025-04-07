@@ -56,8 +56,6 @@ const CONFGive = () => {
     const [loading, setLoading] = useState(false);
     const [receiptType, setReceiptType] = useState<string>(RECEIPT_TYPES.PERSONAL);
     const [isFocused, setIsFocused] = useState(false);
-    const note = watch("note") || ""; // 確保 note 不為 undefined
-    const [noteLength, setNoteLength] = useState(note.length);
     const [selectedPayment, setSelectedPayment] = useState("");
     const [creditCardStatus, setCreditCardStatus] = useState({
         number: '',
@@ -140,10 +138,6 @@ const CONFGive = () => {
             setValue("nationalid", "");
         }
     }, [receiptType, watch('upload')]);
-
-    useEffect(() => {
-        setNoteLength(note.length);
-    }, [note]); // 監聽 note 變化，確保 noteLength 及時更新
 
     useEffect(() => {
         if (!watch('receipt')) {
@@ -425,11 +419,10 @@ const CONFGive = () => {
     const handleConfirmAddNote = () => {
         // note 有沒有過驗證
         console.log(addNoteDialogOpen);
-        if (!errors.note) {
+        if (watch('note').length <= 200) {
             setOutputNote(watch('note'));
             setAddNoteDialogOpen(false);
             console.log(outputNote);
-
         } else {
             return;
         };
@@ -595,7 +588,7 @@ const CONFGive = () => {
                     errors={errors}
                     onClose={handleCloseAddNote}
                     onConfirm={handleConfirmAddNote}
-                    noteLength={noteLength}
+                    noteLength={watch('note').length}
                 ></ConfNoteDialog>
                 {loading && (
                     <Box className="loading">
