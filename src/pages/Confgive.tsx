@@ -497,7 +497,7 @@ const CONFGive = () => {
                                             required: "Required 必填",
                                             // 只能輸入數字
                                             validate: (value) => {
-                                                const phoneCodePattern = /^[0-9]+$/;
+                                                const phoneCodePattern = /^[0-9]{1,3}$/; // 最多3碼數字
                                                 return phoneCodePattern.test(value) || "IDP invalid";
                                             }
                                         })}
