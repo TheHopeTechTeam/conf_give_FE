@@ -20,7 +20,7 @@ const PayButton: React.FC<PayButtonProps> = (props) => {
                     type="submit"
                     variant="contained"
                     className="continue-button width100">
-                    CONTINUE
+                    CONTINUE 下一步
                 </Button>
             )}
             {paymentType === "apple-pay" && (

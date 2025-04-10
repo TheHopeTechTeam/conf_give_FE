@@ -59,7 +59,7 @@ const Upload: React.FC<UploadProps> = (props) => {
                                 id="outlined-required"
                                 className="m-t-8 width100 basic-formControl"
                                 {...register("nationalid", {
-                                    required: upload && receiptType === "personal" ? "Required" : false,
+                                    required: upload && receiptType === "personal" ? "Required 必填" : false,
                                     validate: NationalIDPattern,
                                 })}
                                 error={!!errors.nationalid}

@@ -2,6 +2,8 @@ $pc: "(min-width: 1033px)";
 $tablet: "(max-width: 1032px)";
 $mobile: "(max-width: 599px)"; // 小於 600px 都視為 mobile
 
+@import url(//fonts.googleapis.com/earlyaccess/notosanstc.css);
+
 @font-face {
     font-family: 'Gotham-Black';
     src: url('/fonts/Gotham-Black.woff2') format('woff2')
@@ -20,6 +22,11 @@ $mobile: "(max-width: 599px)"; // 小於 600px 都視為 mobile
 @font-face {
     font-family: 'Roboto';
     src: url('/fonts/Roboto.woff2') format('woff2')
+}
+
+@font-face {
+    font-family: 'Noto Sans';
+    src: url('/fonts/Noto-Sans.woff2') format('woff2')
 }
 
 .title {
@@ -218,7 +225,7 @@ $mobile: "(max-width: 599px)"; // 小於 600px 都視為 mobile
                 width: 100%;
 
                 .phone-code {
-                    width: 205px;
+                    width: 230px;
                 }
 
                 .phone-number {
@@ -439,7 +446,7 @@ $mobile: "(max-width: 599px)"; // 小於 600px 都視為 mobile
 
         .success-title {
             color: #070707;
-            font-family: "Noto Sans TC";
+            font-family: 'Noto Sans TC', '微軟正黑體', sans-serif;
             font-size: 32px;
             font-style: normal;
             font-weight: 400;
@@ -460,7 +467,7 @@ $mobile: "(max-width: 599px)"; // 小於 600px 都視為 mobile
         .note-chinese {
             color: rgba(40, 40, 41, 0.80);
             text-align: center;
-            font-family: "Noto Sans TC";
+            font-family: 'Noto Sans TC', '微軟正黑體', sans-serif;
             font-size: 14px;
             font-style: normal;
             font-weight: 400;
@@ -469,6 +476,7 @@ $mobile: "(max-width: 599px)"; // 小於 600px 都視為 mobile
             margin-bottom: 8px;
 
             a {
+                font-family: "Noto Sans";
                 text-decoration: underline;
                 text-decoration-color: rgba(40, 40, 41, 0.80);
             }
@@ -477,7 +485,7 @@ $mobile: "(max-width: 599px)"; // 小於 600px 都視為 mobile
         .note-english {
             color: rgba(40, 40, 41, 0.80);
             text-align: center;
-            font-family: "Noto Sans TC";
+            font-family: "Noto Sans";
             font-size: 14px;
             font-style: normal;
             font-weight: 400;
@@ -589,7 +597,7 @@ $mobile: "(max-width: 599px)"; // 小於 600px 都視為 mobile
     .MuiOutlinedInput-notchedOutline {
         border: 1px solid rgba(40, 40, 41, 0.10);
         color: #070707;
-        font-family: 'Noto Sans TC';
+        font-family: 'Noto Sans TC', '微軟正黑體', sans-serif;
     }
 
     // hover 時

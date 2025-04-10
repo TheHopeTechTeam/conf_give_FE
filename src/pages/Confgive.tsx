@@ -89,7 +89,7 @@ const CONFGive = () => {
         TPDirect.setupSDK(
             tappayAppId,
             tappayAppKey,
-            'sandbox'
+            'production'
         );
         TPDirect.paymentRequestApi.checkAvailability();
         TPDirect.paymentRequestApi.setupApplePay({
@@ -154,12 +154,15 @@ const CONFGive = () => {
             const isRequired = (status: number) => status === 1;
 
             setCreditCardStatus({
-                number: isRequired(update.status.number) ? "Required" : isInvalid(update.status.number) ? "Invalid card number" : "",
-                expiry: isRequired(update.status.expiry) ? "Required" : isInvalid(update.status.expiry) ? "Invalid expiration date" : "",
-                ccv: isRequired(update.status.ccv) ? "Required" : isInvalid(update.status.ccv) ? "Invalid security code" : "",
+                number: isRequired(update.status.number) ? "Required 必填" : isInvalid(update.status.number) ? "Invalid Card Number 卡號無效" : "",
+                expiry: isRequired(update.status.expiry) ? "Required 必填" : isInvalid(update.status.expiry) ? "Invalid Expiration Date" : "",
+                ccv: isRequired(update.status.ccv) ? "Required 必填" : isInvalid(update.status.ccv) ? "Invalid Security Code" : "",
             });
         });
     };
+
+
+
 
 
 
@@ -315,9 +318,9 @@ const CONFGive = () => {
         const valid = tappayStatus.status.number === 0 && tappayStatus.status.expiry === 0 && tappayStatus.status.ccv === 0;
 
         setCreditCardStatus({
-            number: isRequired(tappayStatus.status.number) ? "Required" : isInvalid(tappayStatus.status.number) ? "Invalid card number" : "",
-            expiry: isRequired(tappayStatus.status.expiry) ? "Required" : isInvalid(tappayStatus.status.expiry) ? "Invalid expiration date" : "",
-            ccv: isRequired(tappayStatus.status.ccv) ? "Required" : isInvalid(tappayStatus.status.ccv) ? "Invalid security code" : "",
+            number: isRequired(tappayStatus.status.number) ? "Required 必填" : isInvalid(tappayStatus.status.number) ? "Invalid Card Number 卡號無效" : "",
+            expiry: isRequired(tappayStatus.status.expiry) ? "Required 必填" : isInvalid(tappayStatus.status.expiry) ? "Invalid Expiration Date" : "",
+            ccv: isRequired(tappayStatus.status.ccv) ? "Required 必填" : isInvalid(tappayStatus.status.ccv) ? "Invalid security code" : "",
         });
 
         console.log("信用卡欄位狀態：", creditCardStatus);
@@ -363,6 +366,10 @@ const CONFGive = () => {
                     document.querySelector(".wrapper")?.classList.add("successAndFailWrapper");
                     setGiveStatus("success");
                     setLoading(false);
+                    // 3秒後跳轉到這個畫面： thehope.co/24report
+                    setTimeout(() => {
+                        window.location.href = "https://thehope.co/24report";
+                    }, 3000);
                 } else {
                     setError();
                 };
@@ -443,7 +450,7 @@ const CONFGive = () => {
                                 <TextField
                                     {...register("amount", {
                                         valueAsNumber: true,
-                                        required: "Required",
+                                        required: "Required 必填",
                                         validate: (value) => value > 0 || "金額必須大於 0",
                                     })}
                                     slotProps={{
@@ -472,7 +479,7 @@ const CONFGive = () => {
                                 }
                                 <TextField
                                     {...register("email", {
-                                        required: "Required",
+                                        required: "Required 必填",
                                         validate: (value) => {
                                             const emailPattern = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
                                             return emailPattern.test(value) || "Email invalid";
@@ -487,7 +494,7 @@ const CONFGive = () => {
                                 <Box className="phone-block">
                                     <TextField
                                         {...register("phoneCode", {
-                                            required: "Required",
+                                            required: "Required 必填",
                                             // 只能輸入數字
                                             validate: (value) => {
                                                 const phoneCodePattern = /^[0-9]+$/;
@@ -509,7 +516,7 @@ const CONFGive = () => {
                                     />
                                     <TextField
                                         {...register("phone_number", {
-                                            required: "Required",
+                                            required: "Required 必填",
                                             validate: (value) => {
                                                 const phonePattern = /^[0-9]{8,15}$/;
                                                 return phonePattern.test(value) || "Mobile Number invalid";

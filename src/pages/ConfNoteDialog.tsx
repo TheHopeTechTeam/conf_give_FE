@@ -44,8 +44,16 @@ const ConfNoteDialog: React.FC<AddNoteDialogProps> = ({
                     style={{ color: noteLength > 200 ? "#E46962" : "rgba(40, 40, 41, 0.80)" }}
                 >
                     {noteLength > 200
-                        ? `Maximum character limit exceeded ${noteLength}/200`
-                        : "Maximum character limit is 200"}
+                        ?
+                        <>
+                            <p>Maximum character limit exceeded {noteLength}/200.</p>
+                            <p>已超過字數上限 {noteLength}/200。</p>
+                        </>
+                        :
+                        <>
+                            <p>Maximum character limit is 200.</p>
+                            <p>最多200字。</p>
+                        </>}
                 </p>
             </DialogContent>
             <DialogActions>

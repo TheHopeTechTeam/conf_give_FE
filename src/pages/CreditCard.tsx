@@ -54,7 +54,7 @@ const CreditCard: React.FC<CreditCardProps> = (props) => {
                     <p className="label-english">Card Holder Name</p>
                     <TextField
                         {...register("name", {
-                            required: paymentType === "credit-card" ? "Required" : false,
+                            required: paymentType === "credit-card" ? "Required 必填" : false,
                         })}
                         sx={{ marginTop: "8px" }}
                         id="outlined-required"

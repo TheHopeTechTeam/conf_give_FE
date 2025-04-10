@@ -94,7 +94,7 @@ const Receipt: React.FC<ReceiptProps> = (props) => {
                                     id="outlined-required"
                                     className="receiptName width100 basic-formControl"
                                     {...register("receiptName", {
-                                        required: receiptType === "personal" ? "Required" : false,
+                                        required: receiptType === "personal" ? "Required 必填" : false,
                                     })}
                                     error={!!errors.receiptName}
                                     helperText={typeof errors.receiptName?.message === 'string' ? errors.receiptName?.message : undefined}
@@ -117,7 +117,7 @@ const Receipt: React.FC<ReceiptProps> = (props) => {
                                 className="receiptName width100 basic-formControl"
                                 {...register("company", {
                                     // 當 getPaymentType === "company" 時，才需要驗證
-                                    required: receiptType === "company" ? "Required" : false,
+                                    required: receiptType === "company" ? "Required 必填" : false,
                                 })}
                                 error={!!errors.company}
                                 helperText={typeof errors.company?.message === 'string' ? errors.company?.message : undefined}
@@ -131,7 +131,7 @@ const Receipt: React.FC<ReceiptProps> = (props) => {
                                 className="m-t-8 width100 basic-formControl"
                                 {...register("taxid", {
                                     // 當 getPaymentType === "company" 時，才需要驗證
-                                    required: receiptType === "company" ? "Required" : false,
+                                    required: receiptType === "company" ? "Required 必填" : false,
                                     validate: taxIDNumberPattern,
                                 })}
                                 error={!!errors.taxid}
