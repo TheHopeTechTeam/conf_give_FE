@@ -198,8 +198,6 @@ const CONFGive = () => {
         if (data.paymentType === "credit-card") {
             setupCreditCard();
         };
-
-        console.log("提交表單:", data);
     };
 
 
@@ -221,9 +219,6 @@ const CONFGive = () => {
         } = await new Promise((resolve) => {
             TPDirect.paymentRequestApi.setupPaymentRequest(paymentRequest, resolve);
         });
-
-        console.log(result, "result of Apple Pay");
-
 
         if (!result.browserSupportPaymentRequest) {
             setIsApplePayReady(false);
@@ -299,7 +294,6 @@ const CONFGive = () => {
                 return;
             };
 
-            console.log("✅ 取得成功:", result);
             postPay(result.prime, result.card.lastfour);
         });
     }
@@ -309,8 +303,6 @@ const CONFGive = () => {
     const setupCreditCard = () => {
         // 檢查各個欄位的狀態
         const tappayStatus = TPDirect.card.getTappayFieldsStatus();
-
-        console.log("信用卡欄位狀態：", tappayStatus);
 
         // 檢查欄位是否無效
         const isInvalid = (status: number) => status === 3 || status === 2;
@@ -323,8 +315,6 @@ const CONFGive = () => {
             ccv: isRequired(tappayStatus.status.ccv) ? "Required 必填" : isInvalid(tappayStatus.status.ccv) ? "Invalid security code" : "",
         });
 
-        console.log("信用卡欄位狀態：", creditCardStatus);
-
         if (valid) {
             TPDirect.card.getPrime((result: any) => {
                 if (result.status !== 0) {
@@ -334,7 +324,6 @@ const CONFGive = () => {
                     return;
                 };
                 // 傳送至後端 API
-                console.log(result);
                 postPay(result.card.prime, result.card.lastfour);
             });
         };
@@ -343,6 +332,7 @@ const CONFGive = () => {
     // **傳送至後端 API**
     const postPay = (prime: string, last_four: string) => {
         setLoading(true);
+        console.log("✅ 付款中");
         fetch('https://confgive.thehope.app/api/payment', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -358,7 +348,6 @@ const CONFGive = () => {
         })
             .then((res) => res.json())
             .then((res) => {
-                console.log(res);
                 console.log("✅ 付款成功");
                 if (res.status === 0) {
                     document.body.style.overflow = "hidden";
@@ -425,11 +414,9 @@ const CONFGive = () => {
     // ** add note dialog confrim**
     const handleConfirmAddNote = () => {
         // note 有沒有過驗證
-        console.log(addNoteDialogOpen);
         if (watch('note').length <= 200) {
             setOutputNote(watch('note'));
             setAddNoteDialogOpen(false);
-            console.log(outputNote);
         } else {
             return;
         };
