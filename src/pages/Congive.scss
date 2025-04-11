@@ -30,7 +30,6 @@ $mobile: "(max-width: 599px)"; // 小於 600px 都視為 mobile
 }
 
 .title {
-    position: fixed; // **讓標題固定**
     top: 0;
     left: 0;
     width: 100%;
@@ -442,7 +441,6 @@ $mobile: "(max-width: 599px)"; // 小於 600px 都視為 mobile
         @media #{$mobile} {
             width: 100%;
             max-width: 390px;
-            padding-top: 120px !important;
         }
 
         .success-title {
@@ -705,7 +703,6 @@ $mobile: "(max-width: 599px)"; // 小於 600px 都視為 mobile
 .successAndFailWrapper {
     display: flex;
     align-items: center;
-    height: 100dvh;
 }
 
 .m-t-8 {

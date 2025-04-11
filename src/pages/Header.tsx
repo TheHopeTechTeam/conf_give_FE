@@ -32,6 +32,7 @@ const Header = ({ titleHeight, setTitleHeight, giveStatus }: HeaderProps) => {
             className="title"
             style={{
                 "--scroll-opacity": (giveStatus === "success" || giveStatus === "fail") ? "100" : scrollOpacity,
+                "position": (giveStatus === "success" || giveStatus === "fail") ? "relative" : "fixed",
                 height: (giveStatus === "success" || giveStatus === "fail") ? "124px" : `${titleHeight}px`,
             } as React.CSSProperties}
         >
