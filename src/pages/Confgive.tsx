@@ -361,6 +361,11 @@ const CONFGive = () => {
                     document.querySelector(".wrapper")?.classList.add("successAndFailWrapper");
                     setGiveStatus("success");
                     setLoading(false);
+                    // 滑動到頂端
+                    window.scrollTo({
+                        top: 0,
+                        behavior: "smooth",
+                    });
                     // 3秒後跳轉到這個畫面： thehope.co/24report
                     setTimeout(() => {
                         window.location.href = "https://thehope.co/24report";
@@ -380,6 +385,11 @@ const CONFGive = () => {
         document.querySelector(".wrapper")?.classList.add("successAndFailWrapper");
         setGiveStatus("fail");
         setLoading(false);
+        // 滑動到頂端
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth",
+        });
     }
 
     // **輸入框內禁止輸入 0 開頭**
