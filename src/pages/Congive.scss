@@ -301,11 +301,13 @@ $mobile: "(max-width: 599px)"; // 小於 600px 都視為 mobile
                 }
 
                 .label-chinese {
+                    font-family: 'Roboto';
                     color: #070707;
                     font-size: 18px;
                 }
 
                 .label-english {
+                    font-family: 'Roboto';
                     color: rgba(40, 40, 41, 0.80);
                     font-size: 16px;
                 }
