@@ -357,7 +357,6 @@ const CONFGive = () => {
             .then((res) => {
                 console.log("✅ 付款成功");
                 if (res.status === 0) {
-                    document.body.style.overflow = "hidden";
                     document.body.style.backgroundColor = "#F1D984";
                     document.querySelector(".wrapper")?.classList.add("successAndFailWrapper");
                     setGiveStatus("success");
@@ -378,7 +377,6 @@ const CONFGive = () => {
 
     // **設置 錯誤訊息**
     const setError = () => {
-        document.body.style.overflow = "hidden";
         document.querySelector(".wrapper")?.classList.add("successAndFailWrapper");
         setGiveStatus("fail");
         setLoading(false);
