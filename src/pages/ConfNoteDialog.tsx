@@ -16,7 +16,7 @@ interface AddNoteDialogProps {
 
 const ConfNoteDialog: React.FC<AddNoteDialogProps> = ({
     open,
-    title = "Add Note",
+    title = "Add Note 新增備註",
     onClose,
     onConfirm,
     cancelText = "CANCEL",
@@ -34,7 +34,7 @@ const ConfNoteDialog: React.FC<AddNoteDialogProps> = ({
                     id="outlined-required"
                     className="width100 m-t-8 note"
                     type="text"
-                    placeholder="Note"
+                    placeholder="Note 備註"
                     multiline
                     rows={9}
                     error={!!errors.note}

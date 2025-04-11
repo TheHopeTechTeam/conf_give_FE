@@ -17,7 +17,7 @@ const Upload: React.FC<UploadProps> = (props) => {
         const multiply = [1, 9, 8, 7, 6, 5, 4, 3, 2, 1];
 
         if (!/^[A-Z](1|2)\d{8}$/i.test(idStr)) {
-            return "National ID invalid";
+            return "National ID invalid\n身份證字號錯誤";
         };
 
         const firstChar = idStr.charAt(0).toUpperCase();
@@ -30,7 +30,7 @@ const Upload: React.FC<UploadProps> = (props) => {
             total += parseInt(idStr.charAt(i - 1), 10) * multiply[i];
         };
 
-        return (10 - (total % 10)) % 10 === lastNum || "National ID invalid";
+        return (10 - (total % 10)) % 10 === lastNum || "National ID invalid\n身份證字號錯誤";
     };
 
     return (

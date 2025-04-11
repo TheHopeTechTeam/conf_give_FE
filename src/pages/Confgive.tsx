@@ -85,12 +85,12 @@ const CONFGive = () => {
             console.error("Missing TapPay configuration in environment variables.");
         }
 
-        console.log("TapPay SDK 加載完成");
         TPDirect.setupSDK(
             tappayAppId,
             tappayAppKey,
-            'production'
+            'production', // or 'sandbox'
         );
+
         TPDirect.paymentRequestApi.checkAvailability();
         TPDirect.paymentRequestApi.setupApplePay({
             merchantIdentifier: appleMerchantId,
@@ -154,9 +154,9 @@ const CONFGive = () => {
             const isRequired = (status: number) => status === 1;
 
             setCreditCardStatus({
-                number: isRequired(update.status.number) ? "Required 必填" : isInvalid(update.status.number) ? "Invalid Card Number 卡號無效" : "",
-                expiry: isRequired(update.status.expiry) ? "Required 必填" : isInvalid(update.status.expiry) ? "Invalid Expiration Date" : "",
-                ccv: isRequired(update.status.ccv) ? "Required 必填" : isInvalid(update.status.ccv) ? "Invalid Security Code" : "",
+                number: isRequired(update.status.number) ? "Required 必填" : isInvalid(update.status.number) ? "Invalid Card Number\n卡號無效" : "",
+                expiry: isRequired(update.status.expiry) ? "Required 必填" : isInvalid(update.status.expiry) ? "Invalid Expiration Date\n到期日無效" : "",
+                ccv: isRequired(update.status.ccv) ? "Required 必填" : isInvalid(update.status.ccv) ? "Invalid Security Code\n安全碼無效" : "",
             });
         });
     };
@@ -309,14 +309,21 @@ const CONFGive = () => {
         const isRequired = (status: number) => status === 1;
         const valid = tappayStatus.status.number === 0 && tappayStatus.status.expiry === 0 && tappayStatus.status.ccv === 0;
 
+        console.log(tappayStatus);
+
+
         setCreditCardStatus({
-            number: isRequired(tappayStatus.status.number) ? "Required 必填" : isInvalid(tappayStatus.status.number) ? "Invalid Card Number 卡號無效" : "",
-            expiry: isRequired(tappayStatus.status.expiry) ? "Required 必填" : isInvalid(tappayStatus.status.expiry) ? "Invalid Expiration Date" : "",
-            ccv: isRequired(tappayStatus.status.ccv) ? "Required 必填" : isInvalid(tappayStatus.status.ccv) ? "Invalid security code" : "",
+            number: isRequired(tappayStatus.status.number) ? "Required 必填" : isInvalid(tappayStatus.status.number) ? "Invalid Card Number\n卡號無效" : "",
+            expiry: isRequired(tappayStatus.status.expiry) ? "Required 必填" : isInvalid(tappayStatus.status.expiry) ? "Invalid Expiration Date\n到期日無效" : "",
+            ccv: isRequired(tappayStatus.status.ccv) ? "Required 必填" : isInvalid(tappayStatus.status.ccv) ? "Invalid security code\n安全碼無效" : "",
         });
+
+
 
         if (valid) {
             TPDirect.card.getPrime((result: any) => {
+                console.log(result);
+
                 if (result.status !== 0) {
                     document.body.style.backgroundColor = "#C4D9D4";
                     document.querySelector(".wrapper")?.classList.add("successAndFailWrapper");
@@ -438,7 +445,7 @@ const CONFGive = () => {
                                     {...register("amount", {
                                         valueAsNumber: true,
                                         required: "Required 必填",
-                                        validate: (value) => value > 0 || "金額必須大於 0",
+                                        validate: (value) => value > 0 || "Amount must be greater than zero.\n金額必須大於 0",
                                     })}
                                     slotProps={{
                                         input: {
@@ -469,7 +476,8 @@ const CONFGive = () => {
                                         required: "Required 必填",
                                         validate: (value) => {
                                             const emailPattern = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
-                                            return emailPattern.test(value) || "Email invalid";
+                                            // 斷行
+                                            return emailPattern.test(value) || "Email invalid\n無效的電子信箱";
                                         }
                                     })}
                                     placeholder="Email"
@@ -485,7 +493,7 @@ const CONFGive = () => {
                                             // 只能輸入數字
                                             validate: (value) => {
                                                 const phoneCodePattern = /^[0-9]{1,3}$/; // 最多3碼數字
-                                                return phoneCodePattern.test(value) || "IDP invalid";
+                                                return phoneCodePattern.test(value) || "IDP invalid\n無效的國碼";
                                             }
                                         })}
                                         defaultValue="886"
@@ -506,7 +514,7 @@ const CONFGive = () => {
                                             required: "Required 必填",
                                             validate: (value) => {
                                                 const phonePattern = /^[0-9]{8,15}$/;
-                                                return phonePattern.test(value) || "Mobile Number invalid";
+                                                return phonePattern.test(value) || "Mobile Number invalid\n無效的手機號碼";
                                             }
                                         })}
                                         slotProps={{
@@ -547,12 +555,12 @@ const CONFGive = () => {
                                         {!outputNote ? (
                                             <>
                                                 <img className="add-icon" src="/images/add-icon.webp" alt="新增" />
-                                                <p className="add-note-label" >Add Note</p>
+                                                <p className="add-note-label" >Add Note 新增備註</p>
                                             </>
                                         ) : (
                                             <>
                                                 <img className="edit-icon" src="/images/edit-icon.webp" alt="編輯" />
-                                                <p className="edit-note-label" >Note: {outputNote}</p>
+                                                <p className="edit-note-label" >Note 備註: {outputNote}</p>
                                             </>
                                         )}
                                     </div>
@@ -577,7 +585,7 @@ const CONFGive = () => {
                     cancelText="CLOSE"></ConfAlertDialog>
                 <ConfNoteDialog
                     open={addNoteDialogOpen}
-                    title="Add Note"
+                    title="Add Note 新增備註"
                     register={register}
                     errors={errors}
                     onClose={handleCloseAddNote}

@@ -353,6 +353,7 @@ $mobile: "(max-width: 599px)"; // 小於 600px 都視為 mobile
                     padding: 16px;
 
                     .valid-text {
+                        white-space: pre-line;
                         color: #E46962;
                         font-family: "Roboto";
                         font-size: 12px;
@@ -618,6 +619,7 @@ $mobile: "(max-width: 599px)"; // 小於 600px 都視為 mobile
 
 .MuiFormControl-root {
     .MuiFormHelperText-root {
+        white-space: pre-line;
         color: #E46962 !important;
         margin-left: 0;
         font-family: 'Roboto';
@@ -704,7 +706,6 @@ $mobile: "(max-width: 599px)"; // 小於 600px 都視為 mobile
     display: flex;
     align-items: center;
     height: 100dvh;
-    margin-top: 0 !important;
 }
 
 .m-t-8 {

@@ -31,7 +31,7 @@ const Receipt: React.FC<ReceiptProps> = (props) => {
         }
 
         if (value.length !== 8 || !regex.test(value)) {
-            return 'Tax ID Number invalid'
+            return 'Tax ID Number invalid\n統一編號格式錯誤';
         }
 
         let logicProductArr = []
@@ -60,7 +60,7 @@ const Receipt: React.FC<ReceiptProps> = (props) => {
             return true;
         }
 
-        return 'Tax ID Number invalid';
+        return 'Tax ID Number invalid\統一編號格式錯誤';
     }
 
 
