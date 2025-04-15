@@ -80,6 +80,9 @@ const CONFGive = () => {
         const appleMerchantId = import.meta.env.VITE_APPLE_MERCHANT_ID || '';
         const googleMerchantId = import.meta.env.VITE_GOOGLE_MERCHANT_ID || '';
 
+        console.log(tappayAppId, tappayAppKey, appleMerchantId, googleMerchantId);
+
+
         if (!tappayAppId || !tappayAppKey) {
             // Error handling
             console.error("Missing TapPay configuration in environment variables.");
@@ -99,8 +102,7 @@ const CONFGive = () => {
         const googlePaySetting = {
             tappayGoogleMerchantId: googleMerchantId,
             allowedCardAuthMethods: ["PAN_ONLY", "CRYPTOGRAM_3DS"],
-            merchantName: "TapPay Test!",
-            allowedCountryCodes: ['TW'],
+            merchantName: "The Hope",
         }
         TPDirect.googlePay.setupGooglePay(googlePaySetting);
         TPDirect.samsungPay.setup({
@@ -160,11 +162,6 @@ const CONFGive = () => {
             });
         });
     };
-
-
-
-
-
 
     useEffect(() => {
         if (!isValid) {
