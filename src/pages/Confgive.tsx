@@ -214,6 +214,9 @@ const CONFGive = () => {
             TPDirect.paymentRequestApi.setupPaymentRequest(paymentRequest, resolve);
         });
 
+        console.log(result);
+
+
         if (!result.browserSupportPaymentRequest) {
             setIsApplePayReady(false);
             handleOpenAlert("此裝置不支援 Apple Pay", "This device does not support Apple Pay");
