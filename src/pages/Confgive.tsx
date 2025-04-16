@@ -97,7 +97,7 @@ const CONFGive = () => {
             countryCode: 'TW',
         });
         const googlePaySetting = {
-            tappayGoogleMerchantId: googleMerchantId,
+            googleMerchantId: googleMerchantId,
             allowedCardAuthMethods: ["PAN_ONLY", "CRYPTOGRAM_3DS"],
             merchantName: "The Hope",
         }
@@ -213,9 +213,6 @@ const CONFGive = () => {
         } = await new Promise((resolve) => {
             TPDirect.paymentRequestApi.setupPaymentRequest(paymentRequest, resolve);
         });
-
-        console.log(result);
-
 
         if (!result.browserSupportPaymentRequest) {
             setIsApplePayReady(false);
