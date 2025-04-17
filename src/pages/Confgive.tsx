@@ -90,7 +90,7 @@ const CONFGive = () => {
         TPDirect.setupSDK(
             tappayAppId,
             tappayAppKey,
-            'sandbox', // or 'production'
+            'production', // or 'sandbox'
         );
 
         TPDirect.paymentRequestApi.checkAvailability();
