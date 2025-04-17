@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { TextField, InputAdornment, Box } from "@mui/material";
+import { TextField, InputAdornment, Box, Checkbox, FormControlLabel, FormControl, FormHelperText } from "@mui/material";
 import CreditCard from "./CreditCard";
 import ExchangeRate from "./ExchangeRate";
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -14,6 +14,7 @@ import PayButton from "./PayButton";
 import CircularProgress from "@mui/material/CircularProgress";
 import ConfNoteDialog from "./ConfNoteDialog";
 import ConfGiveProps from "../interface/confGiveProps.model";
+import ConfPrivacyPolicyDialog from "./ConfPrivacyPolicyDialog";
 
 declare global {
     let TPDirect: any;
@@ -63,6 +64,7 @@ const CONFGive = () => {
         ccv: ''
     });
     const [outputNote, setOutputNote] = useState('');
+    const [privacyPolicyDialogOpen, setPrivacyPolicyDialogOpen] = useState(false);
 
     const handleFocus = () => {
         setIsFocused(true);
@@ -88,7 +90,7 @@ const CONFGive = () => {
         TPDirect.setupSDK(
             tappayAppId,
             tappayAppKey,
-            'production', // or 'sandbox'
+            'sandbox', // or 'production'
         );
 
         TPDirect.paymentRequestApi.checkAvailability();
@@ -431,6 +433,11 @@ const CONFGive = () => {
         };
     }
 
+    // **關閉 privacy policy **
+    const handleClosePrivacyPolicy = () => {
+        setPrivacyPolicyDialogOpen(false);
+    }
+
     return (
         <div>
             <Header titleHeight={titleHeight} setTitleHeight={setTitleHeight} giveStatus={giveStatus} ></Header>
@@ -566,6 +573,37 @@ const CONFGive = () => {
                                             </>
                                         )}
                                     </div>
+                                    <div>
+                                        <FormControl error={!!errors.privacyPolicy} className="privacy-policy-block">
+                                            <FormControlLabel
+                                                control={
+                                                    <Checkbox
+                                                        {...register("privacyPolicy", { required: "Required 必填" })}
+                                                        className="checkbox-custom"
+                                                    />
+                                                }
+                                                label={
+                                                    <p className="privacy-policy-note">
+                                                        點擊送出後即代表您已閱讀並同意「
+                                                        <a
+                                                            href="#"
+                                                            onClick={(e) => {
+                                                                e.preventDefault();
+                                                                setPrivacyPolicyDialogOpen(true);
+                                                            }}
+                                                        >
+                                                            個資搜集
+                                                        </a>
+                                                        」於本機構使用
+                                                    </p>
+                                                }
+                                            />
+                                            {errors.privacyPolicy && (
+                                                <FormHelperText >{errors.privacyPolicy.message}</FormHelperText>
+                                            )}
+                                        </FormControl>
+                                    </div>
+
                                     <PayButton paymentType={watch('paymentType')}
                                         setupGooglePay={setupGooglePay}
                                         setupApplePay={setupApplePay}
@@ -594,6 +632,12 @@ const CONFGive = () => {
                     onConfirm={handleConfirmAddNote}
                     noteLength={watch('note').length}
                 ></ConfNoteDialog>
+                <ConfPrivacyPolicyDialog
+                    open={privacyPolicyDialogOpen}
+                    title="The Hope 教會個人資料使用與隱私政策同意條款"
+                    cancelText="CLOSE"
+                    onClose={handleClosePrivacyPolicy}
+                ></ConfPrivacyPolicyDialog>
                 {loading && (
                     <Box className="loading">
                         <CircularProgress className="loading-icon" />

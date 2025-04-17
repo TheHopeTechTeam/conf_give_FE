@@ -38,13 +38,13 @@ const PayButton: React.FC<PayButtonProps> = (props) => {
                     {isGooglePayReady ? (
                         <button
                             type="button"
-                            className="fake-pay-button google-pay-button"
+                            className="google-pay-button"
                             onClick={setupGooglePay}
                         ></button>
                     ) : (
                         <button
                             type="submit"
-                            className="fake-pay-button google-pay-button"
+                            className="google-pay-button"
                         ></button>
                     )}
                 </>

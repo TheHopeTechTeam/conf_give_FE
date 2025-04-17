@@ -421,6 +421,30 @@ $mobile: "(max-width: 599px)"; // 小於 600px 都視為 mobile
                         text-overflow: ellipsis;
                     }
                 }
+
+                .privacy-policy-block {
+                    .MuiButtonBase-root {
+                        padding-left: 8px;
+                    }
+
+                    .privacy-policy-note {
+                        margin-left: 5px;
+                        color: rgba(40, 40, 41, 0.80);
+                        font-family: 'Noto Sans TC', '微軟正黑體', sans-serif;
+                        font-size: 14px;
+                        font-style: normal;
+                        font-weight: 400;
+                        line-height: normal;
+                        letter-spacing: 0.5px;
+
+                        a {
+                            font-weight: bold;
+                            font-family: 'Noto Sans TC', '微軟正黑體', sans-serif;
+                            text-decoration: underline;
+                            text-decoration-color: rgba(40, 40, 41, 0.80);
+                        }
+                    }
+                }
             }
         }
     }
@@ -524,11 +548,17 @@ $mobile: "(max-width: 599px)"; // 小於 600px 都視為 mobile
     }
 
     .google-pay-button {
-        background-image: url('/images/google-pay-icon.webp');
+        background-size: contain;
+        background-repeat: no-repeat;
+        margin: 0 auto;
+        width: 125px;
+        height: 86px;
+        background-image: url('/images/google-pay-icon.svg');
     }
 
     .samsung-pay-button {
-        background-image: url('/images/samsung-pay-icon.webp');
+        background-size: 20% !important;
+        background-image: url('/images/samsung-pay-icon.png');
     }
 
     .note {
@@ -559,9 +589,14 @@ $mobile: "(max-width: 599px)"; // 小於 600px 都視為 mobile
     }
 }
 
-.MuiDialog-container {
+.note-dialog {
     .MuiPaper-root {
         width: 312px;
+    }
+}
+
+.MuiDialog-container {
+    .MuiPaper-root {
         border-radius: 15px;
     }
 

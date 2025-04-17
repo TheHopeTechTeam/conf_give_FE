@@ -12,6 +12,7 @@ interface ConfGiveProps {
     company: string;
     taxid: string;
     note: string;
+    privacyPolicy: boolean;
 }
 
 export default ConfGiveProps

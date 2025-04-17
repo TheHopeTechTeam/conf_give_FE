@@ -26,7 +26,7 @@ const ConfNoteDialog: React.FC<AddNoteDialogProps> = ({
     const { register, errors, noteLength = 0 } = props;
 
     return (
-        <Dialog open={open} onClose={onClose}>
+        <Dialog open={open} onClose={onClose} className="note-dialog">
             <DialogTitle className="dialog-title">{title}</DialogTitle>
             <DialogContent>
                 <TextField
