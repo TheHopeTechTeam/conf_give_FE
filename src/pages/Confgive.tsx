@@ -540,7 +540,7 @@ const CONFGive = () => {
                                     />
                                 </Box>
                                 <Box className="contact-information">
-                                    <p className="contact-information-note">如要與教會十一奉獻數據整併，請填寫相同的聯絡資料</p>
+                                    <p className="contact-information-note">如要與教會奉獻數據整併，請填寫相同的聯絡資料</p>
                                     <Receipt setReceiptType={setReceiptType}
                                         receiptType={receiptType}
                                         receipt={watch("receipt")}
